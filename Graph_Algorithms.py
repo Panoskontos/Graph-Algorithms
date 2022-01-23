@@ -1,4 +1,8 @@
 # ----------------------- Directed Graphs------------------------------
+import queue
+from turtle import distance
+
+
 graph = {
     'a': ['b', 'c'],
     'b': ['d'],
@@ -154,13 +158,16 @@ def explore(graph, source, visited):
     return True
 
 
+# PROBLEM - Largest Component
 # What is the Largest component in an undirected graph?
 
 def largestComponents(graph):
     visited = []
+    # declare max
     largest = 0
     for i, j in graph.items():
         if i not in visited:
+            # check the size for each node
             size = exploreSize(graph, i, visited)
             if size > largest:
                 largest = size
@@ -180,4 +187,60 @@ def exploreSize(graph, source, visited):
     return size
 
 
-print(largestComponents(graph))
+# Rebuilding a graph for practice
+edges = [
+    ['a', 'b'],
+    ['b', 'c'],
+    ['a', 'd'],
+    ['c', 'e'],
+    ['d', 'f'],
+    ['f', 'z'],
+    ['e', 'z'],
+]
+
+
+def makegraph(edges):
+    graph = {}
+    for i in edges:
+        a, b = i[::]
+        # check if a,b not in keys
+        if a not in graph.keys():
+            # create new key:value
+            graph[a] = []
+        if b not in graph.keys():
+            # create new key:value
+            graph[b] = []
+        # push to neighbors of new key
+        graph[a].append(b)
+        graph[b].append(a)
+    return graph
+
+
+graph = makegraph(edges)
+
+#
+
+# PROBLEM - Shortest Path
+# What is the shortest path to node?
+# BFS is a preferable way for these problems so we will use qa Queue
+
+
+def shortest_path(graph, src, dst):
+    visited = []
+    queue = [[src, 0]]
+    while len(queue) > 0:
+        node, distance = queue.pop(0)
+        if node == dst:
+            # if node is our target return distance
+            return distance
+        for i in graph[node]:
+            if i not in visited:
+                queue.append([i, distance+1])
+                visited.append(i)
+                print(queue)
+    # if while loop is over then we didn't find it
+    return -1
+
+
+print(graph)
+print(shortest_path(graph, 'a', 'z'))
