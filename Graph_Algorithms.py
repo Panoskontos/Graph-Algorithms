@@ -125,9 +125,10 @@ def has_Path_Undirected(graph, source, dst, visited):
 # print(has_Path_Undirected(graph, 'a', 'l', []))
 
 
+# PROBLEM
 # How many seperate components are in a graph?
 # This is called connected components problem
-
+# We will go through all nodes, create a visited array and implements DFS, every time it completes we will add 1
 
 def countComponents(graph):
     visited = []
