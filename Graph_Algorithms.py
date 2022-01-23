@@ -154,4 +154,30 @@ def explore(graph, source, visited):
     return True
 
 
-print(countComponents(graph))
+# What is the Largest component in an undirected graph?
+
+def largestComponents(graph):
+    visited = []
+    largest = 0
+    for i, j in graph.items():
+        if i not in visited:
+            size = exploreSize(graph, i, visited)
+            if size > largest:
+                largest = size
+    return largest
+
+
+def exploreSize(graph, source, visited):
+    # if visited return 0
+    if source in visited:
+        return 0
+    # append visited
+    size = 1
+    visited.append(source)
+    for i in graph[source]:
+        size += exploreSize(graph, i, visited)
+    # if finished it means we completed the components
+    return size
+
+
+print(largestComponents(graph))
