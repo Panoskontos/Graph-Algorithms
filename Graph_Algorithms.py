@@ -71,7 +71,8 @@ edges = [
     ['k', 'a'],
     ['l', 'm'],
     ['m', 'k'],
-    ['o', 'n']
+    ['o', 'n'],
+    ['t', 'u'],
 ]
 
 
@@ -121,4 +122,35 @@ def has_Path_Undirected(graph, source, dst, visited):
     return False
 
 
-print(has_Path_Undirected(graph, 'a', 'l', []))
+# print(has_Path_Undirected(graph, 'a', 'l', []))
+
+
+# How many seperate components are in a graph?
+# This is called connected components problem
+
+
+def countComponents(graph):
+    visited = []
+    count = 0
+    for i, j in graph.items():
+        if i not in visited:
+            if explore(graph, i, visited):
+                count += 1
+    return count
+
+# will can dfs or bfs
+
+
+def explore(graph, source, visited):
+    # start from source and work with dfs
+    if source in visited:
+        return False
+    # append visited
+    visited.append(source)
+    for i in graph[source]:
+        explore(graph, i, visited)
+    # if finished it means we completed the components
+    return True
+
+
+print(countComponents(graph))
